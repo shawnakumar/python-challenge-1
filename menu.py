@@ -50,7 +50,25 @@ menu = {
         "Rice pudding": 4.99,
         "Fried banana": 4.49
     }
-}
+}  
+print ("-------------")
+for k1,v1 in menu.items():
+    print(k1)
+    for k2,v2 in v1.items():
+        print('\t',k2, end='')
+        if isinstance(v2, dict):
+            print()
+            for k3,v3 in v2.items():
+                print('\t\t', k3, v3)
+        else:
+             print(v2)
+
+print("------xx------")
+print ("-------------")
+#print("From which menu would you like to order? ")
+#for ix, k1 in enumerate(menu):
+#    print(f'{ix+1}. {k1}')
+
 #1 Setup the order list that will store a list of dictionaries for 
 #menu items, prices, and quantities available for the customer to order
 # Empty list to store the customer's order
@@ -98,7 +116,7 @@ while place_order:
         print("-------|--------------------------|-------")
         for key, value in menu[menu_category_name].items():
             # Check if the menu item is a dictionary to handle differently
-            if type(value) is dict:
+            if isinstance(value, dict):
                 for key2, value2 in value.items():
                     num_item_spaces = 24 - len(key + key2) - 3
                     item_spaces = " " * num_item_spaces
@@ -122,8 +140,6 @@ while place_order:
 
             # 3. Check if the customer typed a number
             if menu_item.isdigit():
-                quantity = input
-            else:
                 quantity = 1
                 # Convert the menu selection to an integer
                 menu_item = int(menu_item)
@@ -146,6 +162,30 @@ while place_order:
                     else:
                         print("You didn't select a number.")
 
+                    # Add the item name, price, and quantity to the order list
+            else:
+                quantity = 1
+               
+                # Convert the menu selection to an integer
+                menu_item = int(menu_item)
+                # 4. Check if the menu selection is in the menu items
+                if menu_item in menu_items:
+                    # Store the item name as a variable
+                    item_name = menu_items[menu_item]["Item name"]
+
+                    # Ask the customer for the quantity of the menu item
+                    quantity = input(f"How many {item_name} would you like to order? ")
+
+                    # Check if the quantity is a number, default to 1 if not
+                    if quantity.isdigit():
+                        # Add the item name, price, and quantity to the order list
+                        order_list.append({
+                            "Item name": item_name,
+                            "Price": menu_items[menu_item]["Price"],
+                            "Quantity": int(quantity)
+                        })
+                    else:
+                        print("You didn't select a number.")
 
                     # Add the item name, price, and quantity to the order list
                     order_list.append({
@@ -197,6 +237,9 @@ for item in order_list:
 
     # 7. Store the dictionary items as variables
     item_name = item["Item name"]
+    price = item["Price"]
+    quantity = item["Quantity"]
+    print(order_list)
 
     # 8. Calculate the number of spaces for formatted printing'
     num_item_spaces = 24 - len(item_name)
@@ -211,3 +254,5 @@ for item in order_list:
 # Multiply the price by quantity for each item in the order list, then sum()
 # and print the prices.
 total = sum([item["Price"] * item["Quantity"] for item in order_list])
+total_cost = sum(item['Price'] * item['Quantity'] for item in order_list)
+print(f"Total Cost of the Order: ${total_cost:.2f}")
