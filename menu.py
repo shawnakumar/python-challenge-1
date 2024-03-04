@@ -134,9 +134,14 @@ while place_order:
         # Prompt for the user's selection
         menu_item = input("Type the number of the menu item you would like to select: ")
 
-        if menu_item.isdigit():
-            menu_item = int(menu_item)
-            if menu_item in menu_items:
+        # # Prompt for the user's selection
+        menu_item_input = input("Type the number of the menu item you would like to select: ")
+
+        # Check if the user input is a string before using isdigit()
+        if isinstance(menu_item_input, str) and menu_item_input.isdigit(): 
+        # Convert the menu selection to an integer
+             menu_item = int(menu_item_input)
+        if menu_item in menu_items:
                 # Correctly retrieve the selected item details
                 selected_item = menu_items[menu_item]
                 item_name = selected_item["Item name"]
@@ -157,14 +162,28 @@ while place_order:
                     "Quantity": quantity
                 })
                 print(f"Added {quantity} of {item_name} to your order.")
-            else:
-                print("You didn't select a valid menu option.")
         else:
-            print("Please enter a valid number.")
+            print("You didn't select a valid menu option.")
+        # else:
+            # print("Please enter a valid number.")
 
-        # 3. Check if the customer typed a number
-        if menu_item.isdigit():
-                quantity = 1
+
+    #3 Check if the customer typed a number
+        if menu_selection.isdigit():
+            quantity = 1
+        # Convert the menu selection to an integer
+        menu_item = int(menu_item)
+  # Check if the menu selection is in the menu items
+if menu_item in menu_items:
+    # Store the item name as a variable
+    item_name = menu_items[menu_item]["Item name"]
+    
+    # Ask the customer for the quantity of the menu item
+    quantity = input(f"How many {item_name} would you like to order? ")
+    
+    # 3. Check if the customer typed a number
+    if menu_item.isdigit():
+        quantity = 1
         # Convert the menu selection to an integer
         menu_item = int(menu_item)
   # Check if the menu selection is in the menu items
@@ -185,6 +204,11 @@ if menu_item in menu_items:
         })
     else:
         print("You didn't select a menu option.")
+
+     # Tell the customer they didn't select a menu option
+
+        print(f"{menu_category} was not a menu option.")
+        # print("You didn't select a menu option.")
 
      # Tell the customer they didn't select a menu option
 
