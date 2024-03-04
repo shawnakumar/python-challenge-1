@@ -112,37 +112,61 @@ while place_order:
             print(f"What {menu_category_name} item would you like to order?")
             i = 1
             menu_items = {}
+        # After selecting a category and printing "What [Category] item would you like to order?"
         print("Item # | Item name                | Price")
         print("-------|--------------------------|-------")
+        i = 1
+        menu_items = {}
         for key, value in menu[menu_category_name].items():
-            # Check if the menu item is a dictionary to handle differently
             if isinstance(value, dict):
                 for key2, value2 in value.items():
-                    num_item_spaces = 24 - len(key + key2) - 3
-                    item_spaces = " " * num_item_spaces
-                    print(f"{i}      | {key} - {key2}{item_spaces} | ${value2}")
-                    menu_items[i] = {
-                        "Item name": key + " - " + key2,
-                        "Price": value2
-                    }
+                    print(f"{i}      | {key} - {key2}{' ' * (24 - len(key + key2) - 3)} | ${value2}")
+                    menu_items[i] = {"Item name": f"{key} - {key2}", "Price": value2}
                     i += 1
             else:
-                num_item_spaces = 24 - len(key)
-                item_spaces = " " * num_item_spaces
-                print(f"{i}      | {key}{item_spaces} | ${value}")
-                menu_items[i] = {
-                    "Item name": key,
-                    "Price": value
-                }
+                print(f"{i}      | {key}{' ' * (24 - len(key))} | ${value}")
+                menu_items[i] = {"Item name": key, "Price": value}
                 i += 1
-        # 2. Ask customer to input menu item number
-            menu_item = input("Type menu item number: ")
+
+        #2 Now, outside the loop, prompt for the user's selection
+        # Inside the while place_order loop, after printing the menu items for the selected category
+
+        # Prompt for the user's selection
+        menu_item = input("Type the number of the menu item you would like to select: ")
+
+        if menu_item.isdigit():
+            menu_item = int(menu_item)
+            if menu_item in menu_items:
+                # Correctly retrieve the selected item details
+                selected_item = menu_items[menu_item]
+                item_name = selected_item["Item name"]
+                item_price = selected_item["Price"]
+
+                # Ask for the quantity of the selected item
+                quantity_input = input(f"How many of {item_name} would you like to order? ")
+                if quantity_input.isdigit():
+                    quantity = int(quantity_input)
+                else:
+                    print("Invalid input. Defaulting to 1.")
+                    quantity = 1
+
+                # Add the selected item and quantity to the order list
+                order_list.append({
+                    "Item name": item_name,
+                    "Price": item_price,
+                    "Quantity": quantity
+                })
+                print(f"Added {quantity} of {item_name} to your order.")
+            else:
+                print("You didn't select a valid menu option.")
+        else:
+            print("Please enter a valid number.")
 
         # 3. Check if the customer typed a number
-            if menu_item.isdigit():
+        if menu_item.isdigit():
                 quantity = 1
         # Convert the menu selection to an integer
-            menu_item = int(menu_item)
+        menu_item = int(menu_item)
   # Check if the menu selection is in the menu items
 if menu_item in menu_items:
     # Store the item name as a variable
