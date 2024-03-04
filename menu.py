@@ -64,7 +64,7 @@ for k1, v1 in menu.items():
             print(v2)
 print("------xx------")
 print("-------------")
-# Setup the order list that will store a list of dictionaries for 
+# 1  Setup the order list that will store a list of dictionaries for 
 # menu items, prices, and quantities available for the customer to order
 # Empty list to store the customer's order
 order_list = []
