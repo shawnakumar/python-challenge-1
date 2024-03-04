@@ -179,19 +179,21 @@ while place_order:
         keep_ordering = input("Would you like to keep ordering? (Y)es or (N)o ")
         # Check if the customer input is s Y or N
         # 5. Check the customer's input
-        match keep_ordering.lower():
-            case "y":
-                place_order = True
-                # Continue ordering
-                break
-            case "n":
-                place_order = False
-                # Stop ordering and complete the order
-                print("Thank you for your order.")
-                break
-            case _:
-                print("You didn't enter a Y or N. Please try again.")
+        if keep_ordering.lower() == 'y':
+            # Keep ordering
+            break
+        elif keep_ordering.lower() == 'n':
             # Complete the order
+            print("Order completed.")
+            # Since the customer decided to stop ordering, thank them for
+            # their order
+            print("Thank you for your order.")
+            # Exit the keep ordering question loop
+            place_order = False
+            break
+    else:
+        # Tell the customer to try again
+        print("Please try again.")
 # Print out the customer's order
 print("This is what we are preparing for you.\n")
 # Uncomment the following line to check the structure of the order
@@ -204,18 +206,15 @@ for item in order_list:
     item_name = item["Item name"]
     price = item["Price"]
     quantity = item["Quantity"]
-   # print(order_list)
+    print(order_list)
     # 8. Calculate the number of spaces for formatted printing
-    num_item_spaces = 26 - len(item_name)
-    num_price_spaces = 5 - len(str(price))
+    num_item_spaces = 24 - len(item_name)
     # 9. Create space strings
     item_spaces = " " * num_item_spaces
-    price_spaces = " " * num_price_spaces
     # 10. Print the item name, price, and quantity
-    print(f"{item_name}{item_spaces}| ${item['Price']}{price_spaces} | {item['Quantity']}")
+    print(f"{item_name}{item_spaces}| ${item['Price']} | {item['Quantity']}")
 # 11. Calculate the cost of the order using list comprehension
 # Multiply the price by quantity for each item in the order list, then sum()
 # and print the prices.
-print("--------------------------|--------|----------")
 total_cost = sum(item['Price'] * item['Quantity'] for item in order_list)
 print(f"Total Cost of the Order: ${total_cost:.2f}")
